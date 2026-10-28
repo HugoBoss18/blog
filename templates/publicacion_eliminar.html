@@ -1,0 +1,14 @@
+<!-- templates/publicacion_eliminar.html -->
+{% extends "base.html" %}
+
+{% block titulo %}Eliminar publicación{% endblock titulo %}
+
+{% block contenido %}
+  <h1>Eliminar publicación</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>¿Seguro que quieres eliminar "{{ publicacion.titulo }}"? Esta acción no se puede deshacer.</p>
+    <button type="submit" class="boton boton-peligro">Eliminar</button>
+    <a href="{{ publicacion.get_absolute_url }}">Cancelar</a>
+  </form>
+{% endblock contenido %}

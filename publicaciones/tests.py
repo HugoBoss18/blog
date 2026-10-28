@@ -48,3 +48,39 @@ class PruebasBlog(TestCase):
         self.assertContains(respuesta, "Volver al inicio")
         self.assertContains(respuesta, 'href="/"')
         self.assertTemplateUsed(respuesta, "publicacion_detalle.html")
+
+    def test_vista_crear_publicacion(self):
+        respuesta = self.client.post(
+            reverse("publicacion_nueva"),
+            {"titulo": "Nuevo título", "autor": self.usuario.id, "contenido": "Nuevo texto"},
+        )
+        self.assertEqual(respuesta.status_code, 302)
+        publicacion = Publicacion.objects.get(titulo="Nuevo título")
+        self.assertRedirects(respuesta, publicacion.get_absolute_url())
+        self.assertEqual(publicacion.contenido, "Nuevo texto")
+
+    def test_vista_crear_publicacion_sin_titulo(self):
+        respuesta = self.client.post(
+            reverse("publicacion_nueva"),
+            {"titulo": "", "autor": self.usuario.id, "contenido": "Nuevo texto"},
+        )
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertContains(respuesta, "Este campo es obligatorio.")
+        self.assertEqual(Publicacion.objects.count(), 1)
+
+    def test_vista_editar_publicacion(self):
+        respuesta = self.client.post(
+            reverse("publicacion_editar", kwargs={"pk": self.publicacion.pk}),
+            {"titulo": "Título actualizado", "contenido": "Texto actualizado"},
+        )
+        self.assertEqual(respuesta.status_code, 302)
+        self.publicacion.refresh_from_db()
+        self.assertEqual(self.publicacion.titulo, "Título actualizado")
+        self.assertEqual(self.publicacion.contenido, "Texto actualizado")
+
+    def test_vista_eliminar_publicacion(self):
+        respuesta = self.client.post(
+            reverse("publicacion_eliminar", kwargs={"pk": self.publicacion.pk})
+        )
+        self.assertRedirects(respuesta, reverse("inicio"))
+        self.assertFalse(Publicacion.objects.filter(pk=self.publicacion.pk).exists())

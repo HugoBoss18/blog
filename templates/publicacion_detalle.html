@@ -9,5 +9,9 @@
     <p class="meta">Por {{ publicacion.autor }} · {{ publicacion.fecha|date:"j \d\e F \d\e Y" }}</p>
     {{ publicacion.contenido|linebreaks }}
   </article>
+  <p class="acciones">
+    <a href="{% url 'publicacion_editar' publicacion.pk %}">Editar</a>
+    <a href="{% url 'publicacion_eliminar' publicacion.pk %}">Eliminar</a>
+  </p>
   <a href="{% url 'inicio' %}">Volver al inicio</a>
 {% endblock contenido %}

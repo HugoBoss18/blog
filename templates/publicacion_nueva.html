@@ -1,0 +1,13 @@
+<!-- templates/publicacion_nueva.html -->
+{% extends "base.html" %}
+
+{% block titulo %}Nueva publicación{% endblock titulo %}
+
+{% block contenido %}
+  <h1>Nueva publicación</h1>
+  <form action="" method="post" class="formulario">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="boton">Guardar</button>
+  </form>
+{% endblock contenido %}

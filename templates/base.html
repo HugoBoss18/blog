@@ -6,23 +6,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block titulo %}Blog{% endblock titulo %}</title>
-  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
   <header>
     <a href="{% url 'inicio' %}" class="marca">
       <img src="{% static 'img/logo.svg' %}" alt="" width="36" height="36">
-      Blog
+      Blog en Django
     </a>
+    <nav>
+      <a href="{% url 'publicacion_nueva' %}">+ Nueva publicación</a>
+    </nav>
   </header>
   <main>
     {% block contenido %}
     {% endblock contenido %}
   </main>
-  <footer>
-    <p>Creado por Hugo</p>
-    <p>Todos los derechos reservados &copy; 2026</p>
-  </footer>
 </body>
 </html>
