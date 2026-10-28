@@ -1,0 +1,12 @@
+<!-- templates/publicacion_detalle.html -->
+{% extends "base.html" %}
+
+{% block titulo %}{{ publicacion.titulo }}{% endblock titulo %}
+
+{% block contenido %}
+  <article class="publicacion">
+    <h2>{{ publicacion.titulo }}</h2>
+    <p class="meta">Por {{ publicacion.autor }} · {{ publicacion.fecha|date:"j \d\e F \d\e Y" }}</p>
+    {{ publicacion.contenido|linebreaks }}
+  </article>
+{% endblock contenido %}

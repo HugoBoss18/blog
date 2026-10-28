@@ -1,0 +1,51 @@
+/* static/css/base.css */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #f1f5f9;
+}
+
+header {
+  background: #24467b;
+  padding: 12px 32px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+main {
+  max-width: 760px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.publicacion {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 24px;
+  margin-bottom: 24px;
+}
+
+.publicacion h2 a {
+  color: #24467b;
+  text-decoration: none;
+}
+
+.publicacion h2 a:hover {
+  text-decoration: underline;
+}
+
+.meta {
+  color: #64748b;
+  font-size: 14px;
+}
