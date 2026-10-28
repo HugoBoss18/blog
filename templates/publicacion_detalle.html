@@ -9,4 +9,5 @@
     <p class="meta">Por {{ publicacion.autor }} · {{ publicacion.fecha|date:"j \d\e F \d\e Y" }}</p>
     {{ publicacion.contenido|linebreaks }}
   </article>
+  <a href="{% url 'inicio' %}">Volver al inicio</a>
 {% endblock contenido %}

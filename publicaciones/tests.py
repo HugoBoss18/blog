@@ -45,4 +45,6 @@ class PruebasBlog(TestCase):
         self.assertEqual(respuesta.status_code, 200)
         self.assertEqual(sin_respuesta.status_code, 404)
         self.assertContains(respuesta, "Un buen título")
+        self.assertContains(respuesta, "Volver al inicio")
+        self.assertContains(respuesta, 'href="/"')
         self.assertTemplateUsed(respuesta, "publicacion_detalle.html")

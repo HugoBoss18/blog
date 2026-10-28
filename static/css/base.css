@@ -28,6 +28,18 @@ main {
   padding: 0 16px;
 }
 
+footer {
+  margin-top: 40px;
+  padding: 20px 16px;
+  color: #64748b;
+  background: #e2e8f0;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}
+
 .publicacion {
   background: #ffffff;
   border: 1px solid #e2e8f0;
