@@ -37,6 +37,11 @@ class PruebasBlog(TestCase):
         respuesta = self.client.get(reverse("inicio"))
         self.assertEqual(respuesta.status_code, 200)
         self.assertContains(respuesta, "Un contenido muy interesante.")
+        self.assertContains(respuesta, "Editar")
+        self.assertContains(
+            respuesta,
+            reverse("publicacion_editar", kwargs={"pk": self.publicacion.pk}),
+        )
         self.assertTemplateUsed(respuesta, "inicio.html")
 
     def test_vista_detalle(self):
@@ -50,6 +55,8 @@ class PruebasBlog(TestCase):
         self.assertTemplateUsed(respuesta, "publicacion_detalle.html")
 
     def test_vista_crear_publicacion(self):
+        formulario = self.client.get(reverse("publicacion_nueva"))
+        self.assertContains(formulario, "Máximo 200 caracteres.")
         respuesta = self.client.post(
             reverse("publicacion_nueva"),
             {"titulo": "Nuevo título", "autor": self.usuario.id, "contenido": "Nuevo texto"},
@@ -84,3 +91,10 @@ class PruebasBlog(TestCase):
         )
         self.assertRedirects(respuesta, reverse("inicio"))
         self.assertFalse(Publicacion.objects.filter(pk=self.publicacion.pk).exists())
+
+    def test_get_eliminar_publicacion_no_borra(self):
+        respuesta = self.client.get(
+            reverse("publicacion_eliminar", kwargs={"pk": self.publicacion.pk})
+        )
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())

@@ -7,7 +7,16 @@
   <h1>Nueva publicación</h1>
   <form action="" method="post" class="formulario">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.titulo.label_tag }}
+    {{ form.titulo }}
+    {{ form.titulo.help_text }}
+    {{ form.titulo.errors }}
+    {{ form.autor.label_tag }}
+    {{ form.autor }}
+    {{ form.autor.errors }}
+    {{ form.contenido.label_tag }}
+    {{ form.contenido }}
+    {{ form.contenido.errors }}
     <button type="submit" class="boton">Guardar</button>
   </form>
 {% endblock contenido %}

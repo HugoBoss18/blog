@@ -7,6 +7,7 @@
       <h2><a href="{{ publicacion.get_absolute_url }}">{{ publicacion.titulo }}</a></h2>
       <p class="meta">Por {{ publicacion.autor }} · {{ publicacion.fecha|date:"j \d\e F \d\e Y" }}</p>
       <p>{{ publicacion.contenido|truncatewords:30 }}</p>
+      <a href="{% url 'publicacion_editar' pk=publicacion.pk %}">Editar</a>
     </article>
   {% empty %}
     <p>Todavía no hay publicaciones.</p>

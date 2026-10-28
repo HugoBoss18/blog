@@ -5,7 +5,9 @@ from django.urls import reverse
 
 
 class Publicacion(models.Model):
-    titulo = models.CharField("título", max_length=200)
+    titulo = models.CharField(
+        "título", max_length=200, help_text="Máximo 200 caracteres."
+    )
     autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     contenido = models.TextField()
     fecha = models.DateTimeField("fecha de publicación", auto_now_add=True)
