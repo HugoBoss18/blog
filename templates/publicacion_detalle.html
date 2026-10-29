@@ -14,4 +14,11 @@
     <a href="{% url 'publicacion_eliminar' publicacion.pk %}">Eliminar</a>
   </p>
   <a href="{% url 'inicio' %}">Volver al inicio</a>
+
+  {% if user.is_authenticated %}
+    <p class="acciones">
+      <a href="{% url 'publicacion_editar' publicacion.pk %}">Editar</a>
+      <a href="{% url 'publicacion_eliminar' publicacion.pk %}">Eliminar</a>
+    </p>
+  {% endif %}
 {% endblock contenido %}

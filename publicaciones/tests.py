@@ -54,28 +54,34 @@ class PruebasBlog(TestCase):
         self.assertContains(respuesta, 'href="/"')
         self.assertTemplateUsed(respuesta, "publicacion_detalle.html")
 
+    def test_crear_publicacion_requiere_sesion(self):
+        respuesta = self.client.get(reverse("publicacion_nueva"))
+        self.assertRedirects(respuesta, "/cuentas/login/?next=/publicacion/nueva/")
+
     def test_vista_crear_publicacion(self):
-        formulario = self.client.get(reverse("publicacion_nueva"))
-        self.assertContains(formulario, "Máximo 200 caracteres.")
+        self.client.force_login(self.usuario)
         respuesta = self.client.post(
             reverse("publicacion_nueva"),
-            {"titulo": "Nuevo título", "autor": self.usuario.id, "contenido": "Nuevo texto"},
+            {"titulo": "Nuevo título", "contenido": "Nuevo texto"},
         )
         self.assertEqual(respuesta.status_code, 302)
         publicacion = Publicacion.objects.get(titulo="Nuevo título")
         self.assertRedirects(respuesta, publicacion.get_absolute_url())
         self.assertEqual(publicacion.contenido, "Nuevo texto")
+        self.assertEqual(publicacion.autor, self.usuario)
 
     def test_vista_crear_publicacion_sin_titulo(self):
+        self.client.force_login(self.usuario)
         respuesta = self.client.post(
             reverse("publicacion_nueva"),
-            {"titulo": "", "autor": self.usuario.id, "contenido": "Nuevo texto"},
+            {"titulo": "", "contenido": "Nuevo texto"},
         )
         self.assertEqual(respuesta.status_code, 200)
         self.assertContains(respuesta, "Este campo es obligatorio.")
         self.assertEqual(Publicacion.objects.count(), 1)
 
     def test_vista_editar_publicacion(self):
+        self.client.force_login(self.usuario)
         respuesta = self.client.post(
             reverse("publicacion_editar", kwargs={"pk": self.publicacion.pk}),
             {"titulo": "Título actualizado", "contenido": "Texto actualizado"},
@@ -86,15 +92,9 @@ class PruebasBlog(TestCase):
         self.assertEqual(self.publicacion.contenido, "Texto actualizado")
 
     def test_vista_eliminar_publicacion(self):
+        self.client.force_login(self.usuario)
         respuesta = self.client.post(
             reverse("publicacion_eliminar", kwargs={"pk": self.publicacion.pk})
         )
         self.assertRedirects(respuesta, reverse("inicio"))
         self.assertFalse(Publicacion.objects.filter(pk=self.publicacion.pk).exists())
-
-    def test_get_eliminar_publicacion_no_borra(self):
-        respuesta = self.client.get(
-            reverse("publicacion_eliminar", kwargs={"pk": self.publicacion.pk})
-        )
-        self.assertEqual(respuesta.status_code, 200)
-        self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())

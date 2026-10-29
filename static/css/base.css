@@ -15,14 +15,34 @@ header {
   padding: 12px 32px;
 }
 
-header nav a {
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   color: #ffffff;
-  margin-left: 16px;
+}
+
+header nav a,
+header nav .enlace {
+  color: #ffffff;
   text-decoration: none;
 }
 
-header nav a:hover {
+header nav a:hover,
+header nav .enlace:hover {
   text-decoration: underline;
+}
+
+header nav form {
+  margin: 0;
+}
+
+.enlace {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
 
 .marca {
@@ -83,6 +103,15 @@ h1 {
   display: block;
   font-weight: bold;
   margin-bottom: 4px;
+}
+
+.formulario > div {
+  margin-bottom: 16px;
+}
+
+.helptext {
+  color: #64748b;
+  font-size: 14px;
 }
 
 .formulario input,

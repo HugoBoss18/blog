@@ -1,7 +1,8 @@
 # publicaciones/views.py
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView  # nuevo
-from django.urls import reverse_lazy  # nuevo
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Publicacion
 
@@ -17,17 +18,23 @@ class VistaDetallePublicacion(DetailView):
     template_name = "publicacion_detalle.html"
     context_object_name = "publicacion"
 
-class VistaCrearPublicacion(CreateView):  # nuevo
+class VistaCrearPublicacion(LoginRequiredMixin, CreateView):
     model = Publicacion
     template_name = "publicacion_nueva.html"
-    fields = ["titulo", "autor", "contenido"]
+    fields = ["titulo", "contenido"]
 
-class VistaEditarPublicacion(UpdateView):  # nuevo
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+
+
+class VistaEditarPublicacion(LoginRequiredMixin, UpdateView):
     model = Publicacion
     template_name = "publicacion_editar.html"
     fields = ["titulo", "contenido"]
 
-class VistaEliminarPublicacion(DeleteView):  # nuevo
+
+class VistaEliminarPublicacion(LoginRequiredMixin, DeleteView):
     model = Publicacion
     template_name = "publicacion_eliminar.html"
     success_url = reverse_lazy("inicio")

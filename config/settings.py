@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "publicaciones",
+    "cuentas",  # nuevo
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# config/settings.py
+# Cuentas de usuario
+LOGIN_URL = "login"  # nuevo
+LOGIN_REDIRECT_URL = "inicio"  # nuevo
+LOGOUT_REDIRECT_URL = "inicio"  # nuevo
